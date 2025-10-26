@@ -9,11 +9,18 @@ async function bootstrap() {
   app.enableCors({
     origin: 'https://havmorice-mvp-frontend-2-production.up.railway.app',
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
   });
   app.use((req, res, next) => {
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+    res.setHeader('Access-Control-Allow-Origin', 'https://havmorice-mvp-frontend-2-production.up.railway.app');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') {
+      res.sendStatus(200);
+      return;
+    }
     next();
   });
   await app.listen(3000);
