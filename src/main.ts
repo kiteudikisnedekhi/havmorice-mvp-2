@@ -1,5 +1,6 @@
   import { NestFactory } from '@nestjs/core';
   import { AppModule } from './app.module';
+  import { Request, Response, NextFunction } from 'express';  // Add this import
   import * as dotenv from 'dotenv';
 
   dotenv.config();
@@ -10,7 +11,7 @@
       origin: '*',
       credentials: true,
     });
-    app.use((req, res, next) => {
+    app.use((req: Request, res: Response, next: NextFunction) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
