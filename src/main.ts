@@ -7,10 +7,21 @@
 
   async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    app.enableCors({
-      origin: '*',
+    // Define your CORS options
+    const corsOptions = {
+      origin: 'https://havmorice-mvp-frontend-2-production.up.railway.app', // Replace with your Next.js project URL
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
       credentials: true,
-    });
+    };
+
+    // Enable CORS with your options
+    app.enableCors(corsOptions);
+    // app.enableCors({
+    //   origin: '*',
+    //   credentials: true,
+    // });
     app.use((req: Request, res: Response, next: NextFunction) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
